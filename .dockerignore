@@ -1,4 +1,54 @@
+# Build artifacts
 dist/
+*.exe
+*.test
+*.out
+coverage.out
+coverage.html
+
+# Dependencies
 webapp/_webapp/node_modules/
 webapp/_webapp/dist/
+webapp/oauth-landing/node_modules/
+webapp/oauth-landing/dist/
+
+# Environment and secrets
 .env
+.env.*
+*.key
+*.pem
+
+# Git and CI/CD
+.git
+.github
+.gitignore
+
+# Documentation and demos
+docs/
+demo/
+*.md
+README.md
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Helm charts and Kubernetes configs
+helm-chart/
+*.yaml
+*.yml
+
+# Test files
+*_test.go
+*_test.js
+
+# macOS
+.DS_Store
+
+# Temporary files
+tmp/
+temp/
+*.tmp

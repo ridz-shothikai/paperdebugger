@@ -41,6 +41,7 @@ Stay connected with the PaperDebugger community! Join our [Discord](https://disc
   - [Custom Endpoint Configuration](#custom-endpoint-configuration)
 - [Architecture Overview](#architecture-overview)
 - [Self-Host Development Setup](#self-host-development-setup)
+- [Deploy to Google Cloud Run](#deploy-to-google-cloud-run)
 
 ## Features
 
@@ -101,6 +102,22 @@ The PaperDebugger backend is built with modern technologies:
 ## Self-Host Development Setup
 
 Please refer to [DEVELOPMENT.md](docs/DEVELOPMENT.md).
+
+## Deploy to Google Cloud Run
+
+Want to deploy PaperDebugger to Google Cloud Run? We provide a comprehensive step-by-step guide:
+
+**[📘 Google Cloud Run Deployment Guide](docs/CLOUD_RUN_DEPLOYMENT.md)**
+
+This guide covers:
+- ✅ Complete setup instructions from scratch
+- ✅ MongoDB configuration options (Atlas, self-hosted, or GCP)
+- ✅ Environment variables and secrets management
+- ✅ Custom domain setup
+- ✅ Scaling and performance optimization
+- ✅ Cost estimation and troubleshooting
+
+The deployment takes approximately 15-30 minutes and can run on Google Cloud's free tier for low-traffic usage.
 
 ## Citation
 ```
