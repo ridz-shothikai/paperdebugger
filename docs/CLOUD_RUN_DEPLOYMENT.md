@@ -73,7 +73,13 @@ MongoDB Atlas is a fully managed cloud database service with a free tier.
    - Go to "Network Access" in the left sidebar
    - Click "Add IP Address"
    - Click "Allow Access from Anywhere" (0.0.0.0/0)
-   - Confirm (Note: For production, restrict to Cloud Run's IP ranges)
+   - Confirm
+   
+   > **⚠️ Security Warning**: Allowing access from anywhere (0.0.0.0/0) is convenient for getting started but is NOT recommended for production. For production deployments:
+   > - Use a VPC connector to connect Cloud Run to MongoDB privately
+   > - Or restrict access to specific IP ranges
+   > - Enable MongoDB authentication and use strong passwords
+   > - Consider using MongoDB Atlas Private Endpoints for enhanced security
 
 4. **Create Database User**
    - Go to "Database Access" in the left sidebar

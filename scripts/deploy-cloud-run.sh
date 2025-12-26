@@ -126,20 +126,19 @@ print_success "Using region: $REGION"
 print_header "Enabling Required APIs"
 print_info "This may take a few minutes..."
 
-if ! gcloud services enable cloudbuild.googleapis.com --project="$PROJECT_ID"; then
-    print_error "Failed to enable Cloud Build API. Please check your billing and permissions."
-    exit 1
-fi
+enable_api() {
+    local api_name=$1
+    local display_name=$2
+    
+    if ! gcloud services enable "$api_name" --project="$PROJECT_ID"; then
+        print_error "Failed to enable $display_name. Please check your billing and permissions."
+        exit 1
+    fi
+}
 
-if ! gcloud services enable run.googleapis.com --project="$PROJECT_ID"; then
-    print_error "Failed to enable Cloud Run API. Please check your billing and permissions."
-    exit 1
-fi
-
-if ! gcloud services enable artifactregistry.googleapis.com --project="$PROJECT_ID"; then
-    print_error "Failed to enable Artifact Registry API. Please check your billing and permissions."
-    exit 1
-fi
+enable_api "cloudbuild.googleapis.com" "Cloud Build API"
+enable_api "run.googleapis.com" "Cloud Run API"
+enable_api "artifactregistry.googleapis.com" "Artifact Registry API"
 
 print_success "APIs enabled successfully"
 
@@ -202,8 +201,12 @@ print_header "Deployment Summary"
 echo "Project ID:     $PROJECT_ID"
 echo "Region:         $REGION"
 echo "Service Name:   $SERVICE_NAME"
-echo "MongoDB:        ${MONGO_URI:0:30}..."
-echo "OpenAI Key:     ${OPENAI_KEY:0:10}..."
+echo "MongoDB:        [CONFIGURED]"
+echo "OpenAI Key:     [CONFIGURED]"
+echo "JWT Key:        [AUTO-GENERATED]"
+echo ""
+print_warning "Note: Credentials will be passed via command line flags."
+print_warning "For production, consider using Secret Manager (see docs/CLOUD_RUN_DEPLOYMENT.md)"
 echo ""
 read -p "Proceed with deployment? (y/n): " confirm
 
@@ -215,6 +218,8 @@ fi
 # Deploy to Cloud Run
 print_header "Deploying to Cloud Run"
 print_info "Building and deploying... This may take 5-10 minutes."
+print_warning "Security Note: Environment variables are being set via command line."
+print_warning "For production use, consider using Secret Manager for better security."
 echo ""
 
 gcloud run deploy "$SERVICE_NAME" \
