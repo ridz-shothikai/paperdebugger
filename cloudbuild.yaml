@@ -42,9 +42,9 @@ steps:
       - '--platform'
       - 'managed'
       - '--allow-unauthenticated'
-      - '--update-secrets=OPENAI_API_KEY=openai-api-key:latest'
-      - '--update-secrets=PD_MONGO_URI=mongo-uri:latest'
-      - '--update-secrets=JWT_SIGNING_KEY=jwt-signing-key:latest'
+      - '--update-secrets=OPENAI_API_KEY=${_OPENAI_SECRET_NAME}:latest'
+      - '--update-secrets=PD_MONGO_URI=${_MONGO_SECRET_NAME}:latest'
+      - '--update-secrets=JWT_SIGNING_KEY=${_JWT_SECRET_NAME}:latest'
       - '--memory'
       - '${_MEMORY}'
       - '--cpu'
@@ -73,6 +73,10 @@ substitutions:
   _TIMEOUT: '300'
   _MAX_INSTANCES: '10'
   _MIN_INSTANCES: '0'
+  # Secret names in Secret Manager (customize as needed)
+  _OPENAI_SECRET_NAME: 'openai-api-key'
+  _MONGO_SECRET_NAME: 'mongo-uri'
+  _JWT_SECRET_NAME: 'jwt-signing-key'
 
 # Options
 options:

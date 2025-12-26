@@ -47,6 +47,17 @@ check_gcloud() {
     print_success "gcloud CLI is installed"
 }
 
+# Check if openssl is installed
+check_openssl() {
+    if ! command -v openssl &> /dev/null; then
+        print_error "openssl is not installed. Please install it first:"
+        echo "  On Ubuntu/Debian: sudo apt-get install openssl"
+        echo "  On macOS: brew install openssl"
+        exit 1
+    fi
+    print_success "openssl is installed"
+}
+
 # Print welcome message
 print_header "PaperDebugger - Google Cloud Run Deployment"
 echo "This script will help you deploy PaperDebugger to Google Cloud Run."
@@ -55,6 +66,7 @@ echo ""
 # Check prerequisites
 print_info "Checking prerequisites..."
 check_gcloud
+check_openssl
 
 # Get project ID
 print_info "Checking Google Cloud project..."
@@ -114,9 +126,20 @@ print_success "Using region: $REGION"
 print_header "Enabling Required APIs"
 print_info "This may take a few minutes..."
 
-gcloud services enable cloudbuild.googleapis.com --project="$PROJECT_ID" 2>/dev/null || true
-gcloud services enable run.googleapis.com --project="$PROJECT_ID" 2>/dev/null || true
-gcloud services enable artifactregistry.googleapis.com --project="$PROJECT_ID" 2>/dev/null || true
+if ! gcloud services enable cloudbuild.googleapis.com --project="$PROJECT_ID"; then
+    print_error "Failed to enable Cloud Build API. Please check your billing and permissions."
+    exit 1
+fi
+
+if ! gcloud services enable run.googleapis.com --project="$PROJECT_ID"; then
+    print_error "Failed to enable Cloud Run API. Please check your billing and permissions."
+    exit 1
+fi
+
+if ! gcloud services enable artifactregistry.googleapis.com --project="$PROJECT_ID"; then
+    print_error "Failed to enable Artifact Registry API. Please check your billing and permissions."
+    exit 1
+fi
 
 print_success "APIs enabled successfully"
 

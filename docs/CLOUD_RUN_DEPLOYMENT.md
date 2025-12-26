@@ -148,9 +148,11 @@ For production environments, consider using Google Cloud's managed MongoDB servi
 
 ### Step 1: Set Up Google Cloud Project
 
+> **Note**: Throughout this guide, we use `paperdebugger-prod` as an example project ID. Replace it with your own unique project ID.
+
 1. **Create or Select a Project**
    ```bash
-   # Create a new project
+   # Create a new project (replace 'paperdebugger-prod' with your unique project ID)
    gcloud projects create paperdebugger-prod --name="PaperDebugger Production"
    
    # Or list existing projects
