@@ -9,7 +9,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o dist/pd.exe cmd/main.go
 
 FROM debian:bookworm-slim
 
-# Install ca-certificates for HTTPS requests
+# Install ca-certificates for HTTPS requests to external APIs
 RUN apt-get update && apt-get install -y ca-certificates && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
